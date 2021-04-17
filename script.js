@@ -1,12 +1,11 @@
 // const blur = document.getElementsByClassName('blur')[0];
-// const qty = document.getElementsByClassName('qty');
 // const confirm = document.getElementById('confirm');
 // const userInfo = document.getElementsByClassName('userInfo')[0];
 // const confirmMsg = document.getElementsByClassName('confirmMessage')[0];
 // const refreshBtn = document.getElementsByClassName('refreshBtn')[0];
 // let credentials = document.getElementsByClassName('credentials');
 
-// const bagButton = document.getElementsByClassName('bagButton')[0];
+const bagButton = document.getElementsByClassName('bagButton')[0];
 // const bag = document.getElementsByClassName('bag')[0];
 
 // const sendOrderBtn = document.getElementById('sendOrder');
@@ -16,19 +15,20 @@
 
 const firstLayer = document.querySelector('.first-layer');
 
-let selectedItems = [];
+let items = [];
 
 async function appendtoFirstLayer(){
     let response = await fetch('./stock.json');
-    selectedItems = await response.json();
+    items = await response.json();
 
-    selectedItems.forEach(item => {
+    items.forEach(item => {
         if(item.availibility === 'y'){
             let divCard = createDivCard(item);
             firstLayer.appendChild(divCard);
         }
     });
     
+    //function to create div.card element
     function createDivCard(item){
         let divCard = document.createElement('div');
         divCard.setAttribute('class', 'card m-2');
@@ -70,10 +70,27 @@ async function appendtoFirstLayer(){
         return divCard;
 
     }
+
+
+    // code to update selctedItems
+    const qty = document.querySelectorAll('.qty');
+    qty.forEach(element => {
+        element.addEventListener('change', e=>{
+            let target = e.target;
+
+            for (let i = 0; i < items.length; i++) {
+                if (target.id === items[i].name) {
+                    items[i].qty = target.value;
+                    items[i].total = items[i].qty * items[i].price;
+                    console.log(items[i]);
+                }                
+            }
+        });
+    });
+
     
-
+    
 }
-
 appendtoFirstLayer();
 
 //var to send to server
@@ -89,31 +106,7 @@ appendtoFirstLayer();
 // };
 
 
-// adding event listner to select tag
-// for (let i = 0; i < qty.length; i++) {
-//     qty[i].addEventListener('change', e => {
-//         bagButton.style.display = "block"
-//         let target = e.target;
 
-//         //to update the selectedItems Array
-//         switch (target.id) {
-//             case 'Potato':
-//                 selectedItems[0].qty = target.value;
-//                 selectedItems[0].total = selectedItems[0].qty * selectedItems[0].price;
-//                 break;
-        
-//             case 'Tomato':
-//                 selectedItems[1].qty = target.value;
-//                 selectedItems[1].total = selectedItems[1].qty * selectedItems[1].price;
-//                 break;
-        
-//             case 'Lasoon':
-//                 selectedItems[2].qty = target.value;
-//                 selectedItems[2].total = selectedItems[2].qty * selectedItems[2].price;
-//                 break;
-//         }
-//     }); 
-// }
 
 
 //adding event listener to get userinfo
