@@ -97,7 +97,11 @@ appendtoFirstLayer();
 //event handler to create array of selected items
 bagButton.addEventListener('click', ()=>{
 
+    updateSelectedItem();
     
+});
+
+function updateSelectedItem() {
     items.forEach(element => {
         let selObject = {
             name: '',
@@ -105,16 +109,30 @@ bagButton.addEventListener('click', ()=>{
             price: 0,
             total: 0
         }
+
         if (element.qty !== 0) {
+
+            //this for loop checks if item is already selected
+            for (let i = 0; i < selectedItems.length; i++) {
+                if (selectedItems[i].name == element.name) {
+                    selectedItems[i].qty = element.qty;
+                    selectedItems[i].price = element.price;
+                    selectedItems[i].total = element.total;
+                    return;
+                }
+            }
+
+            //if item is not selected then it is appended here
             selObject.name = element.name;
             selObject.qty = element.qty;
             selObject.price = element.price;
             selObject.total = element.total;
             selectedItems.push(selObject);
-            console.log(selectedItems);
         }
     });
-});
+}
+
+
 
 //var to send to server
 // let packageToServer = {
