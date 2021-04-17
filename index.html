@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="style.css">
+
+    <script src="bootstrap/js/bootstrap.min.js" defer></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" defer></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" defer></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" defer></script> -->
+    <script src="./script.js" defer></script>
+    <title>Grocery</title>
+</head>
+<body class="center flexDown">
+    <div class="center flexDown listContainer">
+
+        <div class="card m-2">
+            <img class="card-img-top" src="./images/potato.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Potato</h5>
+                <p class="card-text">Rs.20</p>
+                <select class="form-control qty" id="Potato">
+                    <option value="0">0 Kg</option>
+                    <option value="1">1 Kg</option>
+                    <option value="2">2 Kg</option>
+                    <option value="3">3 Kg</option>
+                    <option value="4">4 Kg</option>
+                    <option value="5">5 Kg</option>
+                </select>
+            </div>
+        </div>
+
+        
+        <div class="card m-2">
+            <img class="card-img-top" src="./images/tomato.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Tomato</h5>
+                <p class="card-text">Rs.30</p>
+                <select class="form-control qty" id="Tomato">
+                    <option value="0">0 Kg</option>
+                    <option value="1">1 Kg</option>
+                    <option value="2">2 Kg</option>
+                    <option value="3">3 Kg</option>
+                    <option value="4">4 Kg</option>
+                    <option value="5">5 Kg</option>
+                </select>
+            </div>
+        </div>
+
+        
+        <div class="card m-2">
+            <img class="card-img-top" src="./images/lasoon.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Lasoon</h5>
+                <p class="card-text">Rs.10</p>
+                <select class="form-control qty" id="Lasoon">
+                    <option value="0">0 Kg</option>
+                    <option value="1">1 Kg</option>
+                    <option value="2">2 Kg</option>
+                    <option value="3">3 Kg</option>
+                    <option value="4">4 Kg</option>
+                    <option value="5">5 Kg</option>
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+
+    <section class="center flexDown bag">
+        <div class="tableContainer">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Qty(kg)</th>
+                        <th scope="col">Price(Rs)</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+        <p><strong> Gross Total </strong> <p id="grossTotal"></p> </p>
+        <button class="btn btn-primary" type="button" id="confirm">Confirm</button>
+    </section>
+
+
+    <section class="center flexDown userInfo">
+        <form class="center flexDown align-items-start">
+            <div class="form-group">
+                <input type="text" class="form-control credentials" id="name" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control credentials" id="phno" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control credentials" cols="30" rows="5" id="addr" placeholder="Enter Address"></textarea>
+            </div>
+            <button class="btn btn-danger" type="button" id="sendOrder">Send Order</button>
+        </form>
+    </section>
+
+    <div class="bagButton">
+        <img src="./images/bag.svg">
+    </div>
+
+    <div class="center flexDown confirmMessage">
+        <p>your order has been registered</p>
+        <button class="btn btn-primary refreshBtn" type="button">Refresh</button>
+    </div>
+
+    <div class="blur"></div>
+
+</body>
+</html>
