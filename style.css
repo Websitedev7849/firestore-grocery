@@ -7,19 +7,7 @@
     --border: 1px solid black
 }
 
-.blur{
-    display: none;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1;
-}
+
 
 .center{
     display: flex;
@@ -31,78 +19,11 @@
     flex-direction: column;
 }
 
-.listContainer{
-    width: 24rem;
-    padding: 1rem;
-    height: auto;
+
+.card{
+   width: 18rem;
 }
 
-    .card{
-        width: 18rem;
-    }
-
-        .image{
-            padding: 1rem;
-        }
-
-        .info{
-            height: 10rem;
-            width: 60%;
-        }
-
-            .numbers{
-                height: 6rem;
-            }
-
-
-.bag, .userInfo, .confirmMessage{
-    position: fixed;
-    display: none;
-    top: 2rem;
-    left: auto;
-    right: auto;
-    background-color: white;
-    height: 26rem;
+.first-layer{
     border: var(--border);
-    padding: 2.5rem 0;
-    z-index: 2;
-}
-
-.confirmMessage{
-    display: none;
-    width: 100%;
-}
-
-.userInfo{
-    padding: 0px 2rem;
-}
-
-    .userInfo form{
-        height: 70%;
-    }
-
-    .tableContainer{
-        overflow: scroll;
-        height: 20rem;
-    }
-
-.bagButton{
-    display: none;
-    background-color: #000000e0;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 2.5rem;
-    right: 1.5rem;
-    padding: 1rem;
-}
-
-    .bagButton img{
-        height: 2rem;
-        width: 2rem;
-    }
-
-@media all and (max-width: 550px){
-    .listContainer{
-        width: 100%;
-    }
 }
