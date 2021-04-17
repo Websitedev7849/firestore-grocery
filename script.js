@@ -6,12 +6,14 @@
 // let credentials = document.getElementsByClassName('credentials');
 
 const bagButton = document.querySelector('.bagButton');
+const editItems = document.querySelector('.edit-items');
 // const bag = document.getElementsByClassName('bag')[0];
 
 // const sendOrderBtn = document.getElementById('sendOrder');
 
 // const grossTotal = document.getElementById('grossTotal');
-// let tbody = document.getElementById('tbody');
+let tbody = document.querySelector('#tbody');
+console.log(tbody);
 
 const firstLayer = document.querySelector('.first-layer');
 
@@ -98,8 +100,11 @@ appendtoFirstLayer();
 bagButton.addEventListener('click', ()=>{
 
     updateSelectedItem();
+
+    appendToTable();
     
 });
+
 
 function updateSelectedItem() {
     items.forEach(element => {
@@ -109,9 +114,9 @@ function updateSelectedItem() {
             price: 0,
             total: 0
         }
-
+        
         if (element.qty !== 0) {
-
+            
             //this for loop checks if item is already selected
             for (let i = 0; i < selectedItems.length; i++) {
                 if (selectedItems[i].name == element.name) {
@@ -132,7 +137,31 @@ function updateSelectedItem() {
     });
 }
 
+function appendToTable() {
+    //adding to table
+    selectedItems.forEach(item => {
+        let tr = document.createElement('tr');
+        if (item.qty !== 0) {
 
+            //loop to append to tr tag
+            Object.values(item).forEach(property => {
+                let td = document.createElement('td');
+                td.innerText = property;
+                tr.appendChild(td);
+            });
+            
+            tbody.appendChild(tr);
+        }
+    });    
+}
+
+// to edit selected items
+editItems.addEventListener('click', ()=>{
+    let tbodyChild = tbody.children;
+    for (let i = 0; i < tbodyChild.length; i++) {
+        tbody.removeChild(tbodyChild[i]);
+    }
+});
 
 //var to send to server
 // let packageToServer = {
@@ -172,26 +201,6 @@ function updateSelectedItem() {
 //     blur.style.display = "block";
 //     let total = 0;
 
-//     //adding to table
-//     selectedItems.forEach(item => {
-//         let tr = document.createElement('tr');
-//         if (item.qty !== 0) {
-
-//             // adding items to itemsToServer to send to server
-//             itemsToServer.push(item);
-
-            
-
-//             //loop to append to tr tag
-//             Object.values(item).forEach(property => {
-//                 let td = document.createElement('td');
-//                 td.innerText = property;
-//                 tr.appendChild(td);
-//             });
-            
-//             tbody.appendChild(tr);
-//         }
-//     });
 
 //     //loop to calculate Gross total
 //     selectedItems.forEach(item => {
