@@ -5,7 +5,7 @@
 // const refreshBtn = document.getElementsByClassName('refreshBtn')[0];
 // let credentials = document.getElementsByClassName('credentials');
 
-const bagButton = document.getElementsByClassName('bagButton')[0];
+const bagButton = document.querySelector('.bagButton');
 // const bag = document.getElementsByClassName('bag')[0];
 
 // const sendOrderBtn = document.getElementById('sendOrder');
@@ -16,6 +16,8 @@ const bagButton = document.getElementsByClassName('bagButton')[0];
 const firstLayer = document.querySelector('.first-layer');
 
 let items = [];
+
+let selectedItems = [];
 
 async function appendtoFirstLayer(){
     let response = await fetch('./stock.json');
@@ -50,18 +52,18 @@ async function appendtoFirstLayer(){
 
         let select = document.createElement('select');
         select.setAttribute('class', 'form-control qty');
-
+        
         for(let i=0; i<=5; i++){
             let option = document.createElement('option');
             option.value = i;
             option.innerText = i + 'kg';
             select.appendChild(option);
         }
-
+        
         divCardBody.appendChild(h5);
         divCardBody.appendChild(p);
         divCardBody.appendChild(select);
-
+        
         img.setAttribute('src', item.imgSrc);
         h5.innerText = item.name;
         p.innerText = 'Rs.' + item.price;
@@ -77,21 +79,42 @@ async function appendtoFirstLayer(){
     qty.forEach(element => {
         element.addEventListener('change', e=>{
             let target = e.target;
-
+            
             for (let i = 0; i < items.length; i++) {
                 if (target.id === items[i].name) {
                     items[i].qty = target.value;
                     items[i].total = items[i].qty * items[i].price;
-                    console.log(items[i]);
                 }                
             }
         });
     });
-
+    
     
     
 }
 appendtoFirstLayer();
+
+//event handler to create array of selected items
+bagButton.addEventListener('click', ()=>{
+
+    
+    items.forEach(element => {
+        let selObject = {
+            name: '',
+            qty: '',
+            price: 0,
+            total: 0
+        }
+        if (element.qty !== 0) {
+            selObject.name = element.name;
+            selObject.qty = element.qty;
+            selObject.price = element.price;
+            selObject.total = element.total;
+            selectedItems.push(selObject);
+            console.log(selectedItems);
+        }
+    });
+});
 
 //var to send to server
 // let packageToServer = {
