@@ -13,7 +13,6 @@ const editItems = document.querySelector('.edit-items');
 
 // const grossTotal = document.getElementById('grossTotal');
 let tbody = document.querySelector('#tbody');
-console.log(tbody);
 
 const firstLayer = document.querySelector('.first-layer');
 
@@ -158,7 +157,7 @@ function appendToTable() {
 // to edit selected items
 editItems.addEventListener('click', ()=>{
     let tbodyChild = tbody.children;
-    for (let i = 0; i < tbodyChild.length; i++) {
+    for (let i = tbodyChild.length - 1 ; i >=0 ; i--) {
         tbody.removeChild(tbodyChild[i]);
     }
 });
