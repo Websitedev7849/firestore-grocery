@@ -38,3 +38,7 @@
         height: 2rem;
         width: 2rem;
     }
+
+.second-layer{
+    display: none;
+}

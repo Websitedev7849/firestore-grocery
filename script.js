@@ -15,6 +15,11 @@ const editItems = document.querySelector('.edit-items');
 let tbody = document.querySelector('#tbody');
 
 const firstLayer = document.querySelector('.first-layer');
+const secondLayer = document.querySelector('.second-layer');
+
+secondLayer.classList.remove('d-flex');
+secondLayer.classList.add('d-none');
+
 
 let items = [];
 
@@ -102,6 +107,14 @@ bagButton.addEventListener('click', ()=>{
 
     appendToTable();
     
+    firstLayer.classList.remove('d-flex');
+    firstLayer.classList.add('d-none');
+
+    secondLayer.classList.remove('d-none');
+    secondLayer.classList.add('d-flex');
+
+    bagButton.style.display = "none";
+
 });
 
 
@@ -114,8 +127,8 @@ function updateSelectedItem() {
             total: 0
         }
         
+        // REMEMBER item.qty == 0 when initialized and item.qty == "0" when changed
         if (element.qty !== 0) {
-            
             //this for loop checks if item is already selected
             for (let i = 0; i < selectedItems.length; i++) {
                 if (selectedItems[i].name == element.name) {
@@ -139,8 +152,10 @@ function updateSelectedItem() {
 function appendToTable() {
     //adding to table
     selectedItems.forEach(item => {
-        let tr = document.createElement('tr');
-        if (item.qty !== 0) {
+
+        // REMEMBER item.qty == 0 when initialized and item.qty == "0" when changed
+        if (item.qty !== "0") {
+            let tr = document.createElement('tr');
 
             //loop to append to tr tag
             Object.values(item).forEach(property => {
@@ -160,6 +175,13 @@ editItems.addEventListener('click', ()=>{
     for (let i = tbodyChild.length - 1 ; i >=0 ; i--) {
         tbody.removeChild(tbodyChild[i]);
     }
+
+    firstLayer.classList.add('d-flex');
+
+    secondLayer.classList.remove('d-flex');
+    secondLayer.classList.add('d-none');
+
+    bagButton.style.display = "flex";
 });
 
 //var to send to server
