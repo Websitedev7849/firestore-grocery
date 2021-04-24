@@ -102,7 +102,6 @@ appendtoFirstLayer();
 
 //event handler to create array of selected items
 bagButton.addEventListener('click', ()=>{
-
     updateSelectedItem();
 
     appendToTable();
@@ -150,11 +149,18 @@ function updateSelectedItem() {
 }
 
 function appendToTable() {
+
+    // to display total amount to user. 
+    // total amount will be vaildated on server too.
+    let grossTotal = document.querySelector('.grossTotal');
+    let total = 0;
+
     //adding to table
     selectedItems.forEach(item => {
 
         // REMEMBER item.qty == 0 when initialized and item.qty == "0" when changed
         if (item.qty !== "0") {
+
             let tr = document.createElement('tr');
 
             //loop to append to tr tag
@@ -165,8 +171,13 @@ function appendToTable() {
             });
             
             tbody.appendChild(tr);
+
+            total += item.total;
+            grossTotal.innerText = "Rs. " + total;
         }
+
     });    
+
 }
 
 // to edit selected items
