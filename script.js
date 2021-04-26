@@ -1,24 +1,27 @@
 // const blur = document.getElementsByClassName('blur')[0];
-// const confirm = document.getElementById('confirm');
-// const userInfo = document.getElementsByClassName('userInfo')[0];
 // const confirmMsg = document.getElementsByClassName('confirmMessage')[0];
 // const refreshBtn = document.getElementsByClassName('refreshBtn')[0];
-// let credentials = document.getElementsByClassName('credentials');
+let credentials = document.getElementsByClassName('credentials');
 
 const bagButton = document.querySelector('.bagButton');
 const editItems = document.querySelector('.edit-items');
 // const bag = document.getElementsByClassName('bag')[0];
 
-// const sendOrderBtn = document.getElementById('sendOrder');
+const sendOrderBtn = document.getElementById('send-order');
 
 // const grossTotal = document.getElementById('grossTotal');
 let tbody = document.querySelector('#tbody');
 
 const firstLayer = document.querySelector('.first-layer');
 const secondLayer = document.querySelector('.second-layer');
+const thirdLayer = document.querySelector('.third-layer');
 
 secondLayer.classList.remove('d-flex');
 secondLayer.classList.add('d-none');
+
+thirdLayer.classList.add('d-none');
+
+const confirm = document.querySelector('.confirm');
 
 
 let items = [];
@@ -116,6 +119,25 @@ bagButton.addEventListener('click', ()=>{
 
 });
 
+confirm.addEventListener('click', ()=>{
+    secondLayer.classList.remove('d-flex');
+    secondLayer.classList.add('d-none');
+
+    thirdLayer.classList.remove('d-none');
+
+});
+
+sendOrderBtn.addEventListener('click', ()=>{
+    credentials = Array.from(credentials);
+    let credArray = [];
+
+    credentials.forEach(cred =>{
+        credArray.push(cred.value);
+    });
+
+    console.log(credArray);
+
+});
 
 function updateSelectedItem() {
     items.forEach(element => {
@@ -172,9 +194,10 @@ function appendToTable() {
             
             tbody.appendChild(tr);
 
-            total += item.total;
-            grossTotal.innerText = "Rs. " + total;
         }
+        
+        total += item.total;
+        grossTotal.innerText = "Rs. " + total;
 
     });    
 
@@ -194,77 +217,3 @@ editItems.addEventListener('click', ()=>{
 
     bagButton.style.display = "flex";
 });
-
-//var to send to server
-// let packageToServer = {
-//     userCred: {},
-//     itemsToServer: []
-// }
-// let itemsToServer = [];
-// let userCred = {
-//     name: '',
-//     phno: '',
-//     addr: ''
-// };
-
-
-
-
-
-//adding event listener to get userinfo
-// for (let i = 0; i < credentials.length; i++) {
-//     credentials[i].addEventListener('blur', e=>{
-//         let target = e.target;
-//         switch (target.id) {
-//             case 'name':
-//                 userCred.name = target.value;
-//                 break;
-//             case 'phno':
-//                 userCred.phno = target.value;
-//                 break;
-//             case 'addr':
-//                 userCred.addr = target.value;
-//                 break;
-//         }
-//     });  
-// }
-
-// bagButton.addEventListener('click', ()=>{
-//     blur.style.display = "block";
-//     let total = 0;
-
-
-//     //loop to calculate Gross total
-//     selectedItems.forEach(item => {
-//         total += item.total;
-//     });
-
-//     grossTotal.innerText = total;
-//     bag.style.display = "flex";
-//     bagButton.style.display = "none"
-
-// });
-
-// confirm.addEventListener('click', ()=>{
-//     userInfo.style.display = "flex";
-// });
-
-// sendOrderBtn.addEventListener('click',()=>{
-//     packageToServer.userCred = userCred;
-//     packageToServer.itemsToServer = itemsToServer;   
-//     console.log(packageToServer); 
-//     // sendToServer(packageToServer);
-//     confirmMsg.style.display = "flex";
-// });
-
-// refreshBtn.addEventListener('click', ()=>{
-//     location.reload();
-// });
-
-// async function sendToServer(arr) {
-//     fetch('/', {
-//         method: 'post',
-//         headers: {'Content-Type':'application/json'},
-//         body: JSON.stringify(arr)
-//     });
-// }
