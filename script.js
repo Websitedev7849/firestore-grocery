@@ -161,12 +161,45 @@ confirm.addEventListener('click', ()=>{
 sendOrderBtn.addEventListener('click', ()=>{
     credentials = Array.from(credentials);
     let credArray = [];
+    let itemsToServer = [];
+    let packageToServer = {
+        credArray: null,
+        itemsToServer: null
+    };
 
     credentials.forEach(cred =>{
         credArray.push(cred.value);
     });
 
-    console.log(credArray);
+    selectedItems.forEach(item => {
+
+        if (item.qty === "0")
+            return;
+
+        let objToServer = {
+            name : '',
+            qty : 0
+        };
+        
+        objToServer.name = item.name;
+        objToServer.qty = parseInt(item.qty);
+
+        itemsToServer.push(objToServer);
+
+    });
+    
+    packageToServer.credArray = credArray;
+    packageToServer.itemsToServer = itemsToServer;
+
+
+    // fetch('/postOrder', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(packageToServer) 
+    // });
+
 });
 
 function updateSelectedItem() {
