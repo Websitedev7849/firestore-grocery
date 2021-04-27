@@ -1,15 +1,10 @@
-// const blur = document.getElementsByClassName('blur')[0];
-// const confirmMsg = document.getElementsByClassName('confirmMessage')[0];
-// const refreshBtn = document.getElementsByClassName('refreshBtn')[0];
-let credentials = document.getElementsByClassName('credentials');
+let credentials = document.querySelectorAll('.credentials');
 
 const bagButton = document.querySelector('.bagButton');
 const editItems = document.querySelector('.edit-items');
-// const bag = document.getElementsByClassName('bag')[0];
 
 const sendOrderBtn = document.getElementById('send-order');
 
-// const grossTotal = document.getElementById('grossTotal');
 let tbody = document.querySelector('#tbody');
 
 const firstLayer = document.querySelector('.first-layer');
@@ -19,10 +14,9 @@ const thirdLayer = document.querySelector('.third-layer');
 secondLayer.classList.remove('d-flex');
 secondLayer.classList.add('d-none');
 
-thirdLayer.classList.add('d-none');
+thirdLayer.classList.add('d-none');   
 
 const confirm = document.querySelector('.confirm');
-
 
 let items = [];
 
@@ -79,9 +73,7 @@ async function appendtoFirstLayer(){
         select.setAttribute('id', item.name);
 
         return divCard;
-
     }
-
 
     // code to update selctedItems
     const qty = document.querySelectorAll('.qty');
@@ -98,33 +90,72 @@ async function appendtoFirstLayer(){
         });
     });
     
-    
-    
 }
 appendtoFirstLayer();
 
+//event listener for monitoring hashes, like router
+// intit to "#first-layer" hash,
+location.hash = "#first-layer";
+window.addEventListener('hashchange', ()=>{
+    switch (location.hash) {
+        case "#first-layer":
+            firstLayer.classList.remove('d-none');
+            firstLayer.classList.add('d-flex');
+
+            bagButton.style.display = "flex";
+
+            secondLayer.classList.remove('d-flex');
+            secondLayer.classList.add('d-none');
+
+            thirdLayer.classList.add('d-none');   
+
+            //emptying table
+            let tbodyChild = tbody.children;
+            for (let i = tbodyChild.length - 1 ; i >=0 ; i--) {
+                tbody.removeChild(tbodyChild[i]);
+            }
+            break;
+
+        case "#second-layer":
+            firstLayer.classList.remove('d-flex');
+            firstLayer.classList.add('d-none');
+        
+            bagButton.style.display = "none";
+
+            secondLayer.classList.remove('d-none');
+            secondLayer.classList.add('d-flex');
+
+            thirdLayer.classList.add('d-none');   
+            break;
+
+        case "#third-layer":
+            firstLayer.classList.remove('d-flex');
+            firstLayer.classList.add('d-none');
+
+            secondLayer.classList.remove('d-flex');
+            secondLayer.classList.add('d-none');
+        
+            thirdLayer.classList.remove('d-none');
+            break;
+    }
+});
+
 //event handler to create array of selected items
 bagButton.addEventListener('click', ()=>{
+    location.hash = "#second-layer";
+
     updateSelectedItem();
 
     appendToTable();
-    
-    firstLayer.classList.remove('d-flex');
-    firstLayer.classList.add('d-none');
+});
 
-    secondLayer.classList.remove('d-none');
-    secondLayer.classList.add('d-flex');
-
-    bagButton.style.display = "none";
-
+// to edit selected items
+editItems.addEventListener('click', ()=>{
+    location.hash = "#first-layer";
 });
 
 confirm.addEventListener('click', ()=>{
-    secondLayer.classList.remove('d-flex');
-    secondLayer.classList.add('d-none');
-
-    thirdLayer.classList.remove('d-none');
-
+    location.hash = "#third-layer";
 });
 
 sendOrderBtn.addEventListener('click', ()=>{
@@ -136,7 +167,6 @@ sendOrderBtn.addEventListener('click', ()=>{
     });
 
     console.log(credArray);
-
 });
 
 function updateSelectedItem() {
@@ -203,17 +233,3 @@ function appendToTable() {
 
 }
 
-// to edit selected items
-editItems.addEventListener('click', ()=>{
-    let tbodyChild = tbody.children;
-    for (let i = tbodyChild.length - 1 ; i >=0 ; i--) {
-        tbody.removeChild(tbodyChild[i]);
-    }
-
-    firstLayer.classList.add('d-flex');
-
-    secondLayer.classList.remove('d-flex');
-    secondLayer.classList.add('d-none');
-
-    bagButton.style.display = "flex";
-});
