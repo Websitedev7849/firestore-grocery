@@ -192,13 +192,15 @@ sendOrderBtn.addEventListener('click', ()=>{
     packageToServer.itemsToServer = itemsToServer;
 
 
-    // fetch('/postOrder', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(packageToServer) 
-    // });
+    fetch('/postOrder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(packageToServer) 
+    }).then(res => {
+        console.log("package sent succesfully");
+    });
 
 });
 
