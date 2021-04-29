@@ -199,7 +199,9 @@ sendOrderBtn.addEventListener('click', ()=>{
         },
         body: JSON.stringify(packageToServer) 
     }).then(res => {
-        console.log("package sent succesfully");
+        return res.json();
+    }).then(data => {
+        console.log(data);
     });
 
 });
