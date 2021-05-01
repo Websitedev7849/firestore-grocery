@@ -11,6 +11,8 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+const collection = db.collection('orders');
+
 
 const PORT = 3300;
 
@@ -19,8 +21,7 @@ app.use( express.static('public') );
 
 app.post('/postOrder', (req,res)=>{
     let package = req.body;
-    console.log(package);
-    // addToDb(package);
+    setDoc(package);
     res.status(200).send(package);
 });
 
@@ -28,13 +29,40 @@ app.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
 });
 
-function addToDb(obj) {
 
-    obj = JSON.stringify(obj);
-    let docId = new Date().getTime() + '';
+function setDoc(package) {
 
-    db.collection('orders').doc( docId ).set(obj)
+    let docId = new Date().getTime() + "";
+
+    let userCred = {
+        name : package.credArray[0],
+        phno : package.credArray[1],
+        addr : package.credArray[2]
+    };
+    
+    let items = package.itemsToServer;
+    
+    let stringifiedPackage = {
+        userCred: JSON.stringify(userCred),
+        items: JSON.stringify(items)
+    };
+    
+    collection.doc(docId).set(stringifiedPackage)
     .then(()=>{
-        console.log("package has been adapted succesfully");
+        console.log('data appended succefully');
     })
+    .catch(err=>{
+        console.log(err);
+    });
 }
+// setDoc();
+
+function getDoc() {
+    collection.get()
+    .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+            console.log(doc.data());
+        });
+    });
+}
+// getDoc();
