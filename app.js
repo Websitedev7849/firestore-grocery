@@ -21,7 +21,9 @@ app.use( express.static('public') );
 
 app.post('/postOrder', (req,res)=>{
     let package = req.body;
+
     setDoc(package);
+
     res.status(200).send(package);
 });
 
@@ -40,20 +42,37 @@ function setDoc(package) {
         addr : package.credArray[2]
     };
     
-    let items = package.itemsToServer;
-    
-    let stringifiedPackage = {
-        userCred: JSON.stringify(userCred),
-        items: JSON.stringify(items)
-    };
-    
-    collection.doc(docId).set(stringifiedPackage)
-    .then(()=>{
-        console.log('data appended succefully');
-    })
-    .catch(err=>{
-        console.log(err);
+    let items;
+
+    generateInvoice(package.itemsToServer)
+    .then(data=>{
+
+        items = data;
+
+        let grossTotal = 0;
+
+        for (let i = 0; i < data.length; i++) {
+            grossTotal += data[i].total;
+        }
+
+        let stringifiedPackage = {
+            userCred: JSON.stringify(userCred),
+            items: JSON.stringify(items),
+            grossTotal: grossTotal
+        };
+        
+        collection.doc(docId).set(stringifiedPackage)
+        .then(()=>{
+            console.log('data appended succefully');
+        })
+        .catch(err=>{
+            console.log(err);
+        });
+
     });
+
+    
+   
 }
 // setDoc();
 
@@ -66,3 +85,37 @@ function getDoc() {
     });
 }
 // getDoc();
+
+function generateInvoice(items) {
+    return new Promise((res, rej)=>{
+        const stock = require('./stock.json')
+
+        let invoiceArray = [];
+
+        items.forEach(item=>{
+
+            let selObject = {
+                name: '',
+                qty: '',
+                price: 0,
+                total: 0
+            };
+
+            stock.forEach(stock => {
+                if( item.name === stock.name ){
+                    selObject.name = item.name;
+                    selObject.qty = item.qty;
+                    selObject.price = stock.price;
+                    selObject.total = item.qty * stock.price;
+                    
+                    invoiceArray.push(selObject);
+
+                }
+            });
+        });
+        
+        res(invoiceArray);
+
+    });
+}
+
