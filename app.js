@@ -18,23 +18,28 @@ const PORT = 3300;
 
 app.use( express.json() );
 app.use( express.static('public') );
+app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.post('/postOrder', (req,res)=>{
     let package = req.body;
 
     setDoc(package);
-    
+
 });
 
 app.get('/get-orders', (req,res)=> {
-
+    console.log('api is being accesed');
     getDoc(orders => {
     
         for (let i = 0; i < orders.length; i++) {
             orders[i].userCred = JSON.parse(orders[i].userCred);
             orders[i].items = JSON.parse(orders[i].items)
         }
-    
+        console.log('json string delivered as response');
         res.send(JSON.stringify(orders));
 
     });
