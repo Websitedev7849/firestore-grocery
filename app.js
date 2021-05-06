@@ -23,8 +23,22 @@ app.post('/postOrder', (req,res)=>{
     let package = req.body;
 
     setDoc(package);
+    
+});
 
-    res.status(200).send(package);
+app.get('/get-orders', (req,res)=> {
+
+    getDoc(orders => {
+    
+        for (let i = 0; i < orders.length; i++) {
+            orders[i].userCred = JSON.parse(orders[i].userCred);
+            orders[i].items = JSON.parse(orders[i].items)
+        }
+    
+        res.send(JSON.stringify(orders));
+
+    });
+
 });
 
 app.listen(PORT, ()=>{
@@ -42,19 +56,15 @@ function setDoc(package) {
         addr : package.credArray[2]
     };
     
-    let items;
-
+    
     generateInvoice(package.itemsToServer)
-    .then(data=>{
-
-        items = data;
+    .then(items=>{
 
         let grossTotal = 0;
-
-        for (let i = 0; i < data.length; i++) {
-            grossTotal += data[i].total;
-        }
-
+        
+        for (let i = 0; i < items.length; i++)
+            grossTotal += items[i].total;
+        
         let stringifiedPackage = {
             userCred: JSON.stringify(userCred),
             items: JSON.stringify(items),
@@ -68,23 +78,33 @@ function setDoc(package) {
         .catch(err=>{
             console.log(err);
         });
+        
+        console.log( userCred, items, grossTotal);
 
     });
-
-    
    
 }
 // setDoc();
 
-function getDoc() {
+function getDoc(callback) {
+
+    let orders = [];
+
     collection.get()
     .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-            console.log(doc.data());
-        });
+       let docs = snapshot.docs;
+
+       for (let i = 0; i < docs.length; i++)
+           orders.push( docs[i].data() );
+
+        callback(orders)
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
-// getDoc();
+
+
 
 function generateInvoice(items) {
     return new Promise((res, rej)=>{
