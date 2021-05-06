@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Websitedev7849/firestore-grocery#readme",
   "dependencies": {
-    "dot-env": "0.0.1",
+    "dotenv": "^9.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.6.0"
   }

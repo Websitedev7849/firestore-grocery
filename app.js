@@ -1,9 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require('./servicekey.json');
+let serviceAccount = require('./servicekey.json');
+
+//fetching private key
+serviceAccount.private_key_id = process.env.private_key_id;
+serviceAccount.private_key = process.env.private_key;
 
 //here you intitliaze the firestore api by verifying the user credentials
 admin.initializeApp({
