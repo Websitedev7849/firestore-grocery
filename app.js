@@ -1,8 +1,6 @@
 /*
     TO DO
-    create template to display orders
     add doc id to the orders after recievieng orders
-    render orders to cleient using ejs
 */
 
 require('dotenv').config();
@@ -28,6 +26,10 @@ const collection = db.collection('orders');
 
 const PORT = process.env.PORT || 3300;
 
+//setting view engine for dynamic page
+app.set('view engine', 'ejs');
+app.set('views', 'view orders');
+
 app.use( express.json() );
 app.use( express.static('public') );
 app.use((req,res,next)=>{
@@ -44,17 +46,18 @@ app.post('/postOrder', (req,res)=>{
 });
 
 app.get('/get-orders', (req,res)=> {
-    console.log('api is being accesed');
+    console.log('/get-orders api is being accesed');
     getDoc(orders => {
     
         for (let i = 0; i < orders.length; i++) {
             orders[i].userCred = JSON.parse(orders[i].userCred);
             orders[i].items = JSON.parse(orders[i].items)
         }
-        console.log('json string delivered as response');
-        res.send(JSON.stringify(orders));
+        
+        res.render('orders', {orders});
 
     });
+
 
 });
 
