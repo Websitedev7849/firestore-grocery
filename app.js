@@ -1,3 +1,10 @@
+/*
+    TO DO
+    create template to display orders
+    add doc id to the orders after recievieng orders
+    render orders to cleient using ejs
+*/
+
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -19,7 +26,7 @@ const db = admin.firestore();
 const collection = db.collection('orders');
 
 
-const PORT = 3300;
+const PORT = process.env.PORT || 3300;
 
 app.use( express.json() );
 app.use( express.static('public') );
