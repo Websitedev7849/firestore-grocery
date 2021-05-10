@@ -48,12 +48,12 @@ app.post('/postOrder', (req,res)=>{
 app.get('/get-orders', (req,res)=> {
     console.log('/get-orders api is being accesed');
     getDoc(orders => {
-    
+        
         for (let i = 0; i < orders.length; i++) {
             orders[i].userCred = JSON.parse(orders[i].userCred);
             orders[i].items = JSON.parse(orders[i].items)
         }
-        
+
         res.render('orders', {orders});
 
     });
@@ -114,8 +114,12 @@ function getDoc(callback) {
     .then(snapshot => {
        let docs = snapshot.docs;
 
-       for (let i = 0; i < docs.length; i++)
-           orders.push( docs[i].data() );
+       for (let i = 0; i < docs.length; i++){
+        //    orders.push( docs[i].data() );
+           let docBody = docs[i].data();
+           docBody.docId = docs[i].id;
+           orders.push(docBody);
+       }
 
         callback(orders)
     })
