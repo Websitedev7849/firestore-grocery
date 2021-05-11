@@ -99,7 +99,6 @@ function setDoc(package) {
             console.log(err);
         });
         
-        // console.log( userCred, items, grossTotal, docId);
 
     });
    
