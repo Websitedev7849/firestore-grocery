@@ -41,7 +41,11 @@ app.use((req,res,next)=>{
 app.post('/postOrder', (req,res)=>{
     let package = req.body;
 
-    setDoc(package);
+    let docId = setDoc(package);
+
+    res.json({
+        "docId": docId
+    });
 
 });
 
@@ -99,10 +103,12 @@ function setDoc(package) {
             console.log(err);
         });
         
-        console.log( userCred, items, grossTotal);
+        console.log( userCred, items, grossTotal, docId);
 
     });
    
+    return docId;
+
 }
 // setDoc();
 

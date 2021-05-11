@@ -4,17 +4,23 @@ const bagButton = document.querySelector('.bagButton');
 const editItems = document.querySelector('.edit-items');
 
 const sendOrderBtn = document.getElementById('send-order');
+const orderId = document.querySelector('.order-id');
+const continueShopping = document.querySelector('.continue-shopping');
 
 let tbody = document.querySelector('#tbody');
 
 const firstLayer = document.querySelector('.first-layer');
 const secondLayer = document.querySelector('.second-layer');
 const thirdLayer = document.querySelector('.third-layer');
+const fourthLayer = document.querySelector('.fourth-layer');
 
 secondLayer.classList.remove('d-flex');
 secondLayer.classList.add('d-none');
 
 thirdLayer.classList.add('d-none');   
+
+fourthLayer.classList.remove('d-flex');
+fourthLayer.classList.add('d-none');
 
 const confirm = document.querySelector('.confirm');
 
@@ -107,7 +113,10 @@ window.addEventListener('hashchange', ()=>{
             secondLayer.classList.remove('d-flex');
             secondLayer.classList.add('d-none');
 
-            thirdLayer.classList.add('d-none');   
+            thirdLayer.classList.add('d-none'); 
+            
+            fourthLayer.classList.add('d-none');
+            
 
             //emptying table
             let tbodyChild = tbody.children;
@@ -125,7 +134,9 @@ window.addEventListener('hashchange', ()=>{
             secondLayer.classList.remove('d-none');
             secondLayer.classList.add('d-flex');
 
-            thirdLayer.classList.add('d-none');   
+            thirdLayer.classList.add('d-none');
+            
+            fourthLayer.classList.add('d-none');
             break;
 
         case "#third-layer":
@@ -136,6 +147,21 @@ window.addEventListener('hashchange', ()=>{
             secondLayer.classList.add('d-none');
         
             thirdLayer.classList.remove('d-none');
+
+            fourthLayer.classList.add('d-none');
+            break;
+        
+        case "#fourth-layer":
+            firstLayer.classList.remove('d-flex');
+            firstLayer.classList.add('d-none');
+                
+            secondLayer.classList.remove('d-flex');
+            secondLayer.classList.add('d-none');
+            
+            thirdLayer.classList.add('d-none');
+            
+            fourthLayer.classList.remove('d-none');
+            
             break;
     }
 });
@@ -200,10 +226,15 @@ sendOrderBtn.addEventListener('click', ()=>{
         body: JSON.stringify(packageToServer) 
     }).then(res => {
         return res.json();
-    }).then(data => {
-        console.log(data);
+    }).then(obj => {
+        orderId.innerText = obj.docId;
+        location.hash = "#fourth-layer";
     });
 
+});
+
+continueShopping.addEventListener('click', ()=>{
+    window.location.reload();
 });
 
 function updateSelectedItem() {
