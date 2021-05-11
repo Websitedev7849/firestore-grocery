@@ -1,7 +1,3 @@
-/*
-    TO DO
-    add doc id to the orders after recievieng orders
-*/
 
 require('dotenv').config();
 const express = require('express');
@@ -41,12 +37,16 @@ app.use((req,res,next)=>{
 app.post('/postOrder', (req,res)=>{
     let package = req.body;
 
-    setDoc(package);
+    let docId = setDoc(package);
+
+    res.json({
+        "docId": docId
+    });
 
 });
 
 app.get('/get-orders', (req,res)=> {
-    console.log('/get-orders api is being accesed');
+    // console.log('/get-orders api is being accesed');
     getDoc(orders => {
         
         for (let i = 0; i < orders.length; i++) {
@@ -99,12 +99,13 @@ function setDoc(package) {
             console.log(err);
         });
         
-        console.log( userCred, items, grossTotal);
+        // console.log( userCred, items, grossTotal, docId);
 
     });
    
+    return docId;
+
 }
-// setDoc();
 
 function getDoc(callback) {
 
@@ -115,7 +116,6 @@ function getDoc(callback) {
        let docs = snapshot.docs;
 
        for (let i = 0; i < docs.length; i++){
-        //    orders.push( docs[i].data() );
            let docBody = docs[i].data();
            docBody.docId = docs[i].id;
            orders.push(docBody);
