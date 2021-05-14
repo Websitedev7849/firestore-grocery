@@ -1,9 +1,10 @@
-
 require('dotenv').config();
 const express = require('express');
 const app = express();
 
 const admin = require('firebase-admin');
+const stock = require('./stock.json')
+
 
 let serviceAccount = require('./servicekey.json');
 
@@ -58,7 +59,11 @@ app.get('/get-orders', (req,res)=> {
 
     });
 
+});
 
+// api to get stock for front end
+app.get('/get-stock', (req,res)=>{
+    res.json(stock);
 });
 
 app.listen(PORT, ()=>{
@@ -130,7 +135,6 @@ function getDoc(callback) {
 
 function generateInvoice(items) {
     return new Promise((res, rej)=>{
-        const stock = require('./stock.json')
 
         let invoiceArray = [];
 
